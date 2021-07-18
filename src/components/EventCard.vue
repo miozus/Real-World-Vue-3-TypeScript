@@ -16,6 +16,7 @@ import { EventItem } from '../types'
 export default defineComponent({
   props: {
     event: {
+      // are it ok?
       type: Object as PropType<EventItem>,
       required: true
     }
