@@ -1,21 +1,38 @@
 <template>
-  <h1>Todo</h1>
-  <label>Task Label: </label>
-  <input type="text" />
-  <br />
-  <label>Task Type: </label>
-  <selector>
-    <option v-for="(type, index) in newTask" :key="index">{{type}}</option>
-  </selector>
-  <button class="button" @click="addTask">Add Task</button>
-
-  <br />
-  <h1>Task List</h1>
-  <button class="button">All</button> |
-  <button class="button">Incomplete</button> |
-  <button class="button">Complete</button>
-  <br />
-  <div>{{ filterTasks }}</div>
+  <div class="todo-page">
+    <form @submit.prevent>
+      <div class="mb1">
+        <h1>Todo</h1>
+        <label for="task-label">Task Label: </label>
+        <input type="text" id="task-label" v-model="newTask.label" />
+      </div>
+      <div class="mb1">
+        <label for="task-type">Task Type: </label>
+        <select>
+          <option value="personal">person</option>
+          <option value="work">work</option>
+          <option value="miscellaneous">miscellaneous</option>
+        </select>
+      </div>
+      <button class="button" @click="addTask">Add Task</button>
+    </form>
+    <div class="mb1">
+      <h1>Task List</h1>
+      <button class="button" @class="listFilter = 'all'">All</button> |
+      <button class="button" @class="listFilter = 'incomplete'">
+        incomplete
+      </button>
+      |
+      <button class="button" @class="listFilter = 'complete'">complete</button>
+      <ul>
+        <li v-for="(task, index) in filterTasks" :key="index">
+          <input class="checkbox" v-model="filteredTasks.isComplete" />
+          {{ task.label }}
+          ({{ task.type }})
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
